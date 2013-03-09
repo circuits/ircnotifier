@@ -25,13 +25,14 @@ from circuits import Component, Event, Debugger, Timer
 from circuits.web import JSONController, Static, Server
 from circuits.net.protocols.irc import IRC, USER, NICK, JOIN
 
-from . webapi import WebApi
+from . webapi import WebAPI
 from . import __name__, __version__
 
 USAGE = "%prog [options] <host> [<port>]"
 VERSION = "%prog v" + __version__
 
 DOCROOT = path.abspath(path.join(path.dirname(__file__), "htdocs"))
+PIDFILE = path.join(path.dirname(__file__), "{0:s}.pid".format(__name__))
 
 
 def parse_options():
