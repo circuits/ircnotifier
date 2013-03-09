@@ -29,7 +29,7 @@ class WebAPI(JSONController):
         pprint(args)
         pprint(kwargs)
 
-        channel = args[0] if args else "#circuits"
+        channel = "#{0:s}".format(args[0]) if args else "#circuits"
         payload = loads(kwargs.get("payload", "{}"))
 
         name = payload.get("repository", {}).get("name", "Unknown")
