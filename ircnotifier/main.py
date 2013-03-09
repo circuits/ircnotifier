@@ -170,6 +170,15 @@ class Bot(Component):
         message we receieve from the server.
         """
 
+    def invite(self, source, target, channel):
+        """Invite Event
+
+        This event is triggered by the ``IRC`` Protocol Component when the
+        bot has been invited to a channel.
+        """
+
+        self.fire(JOIN(channel))
+
 
 def main():
     opts, args = parse_options()
