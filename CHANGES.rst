@@ -2,7 +2,7 @@ Changelog for ircnotifier
 =========================
 
 
-0.0.2 (unreleased)
+0.0.2 (2013-03-10)
 ------------------
 
 - Added generic message endpoint and message script.
