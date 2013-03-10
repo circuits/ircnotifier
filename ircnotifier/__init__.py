@@ -16,4 +16,4 @@ notifications received through various sources to IRC Channels.
 
 __author__ = "James Mills, prologic at shortcircuit dot net dot au"
 __date__ = "9th March 2013"
-__version__ = "0.0.1dev"
+__version__ = "0.0.3.dev0"
