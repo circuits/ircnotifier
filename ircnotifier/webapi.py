@@ -19,7 +19,8 @@ class WebAPI(JSONController):
     channel = "/api"
 
     def index(self):
-        methods = self.handlers()
+        methods = [x.names[0] for x in self.handlers()
+                   if getattr(x, "exposed", True)]
         return {"success": True, "methods": methods}
 
     def postcommit(self, *args, **kwargs):
