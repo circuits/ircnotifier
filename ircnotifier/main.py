@@ -8,14 +8,15 @@ For usage type:
 """
 
 
+import sys
 from os import environ, path
 from socket import gethostname
 from optparse import OptionParser
 
 import circuits
 from circuits.app import Daemon
-from circuits.web import Static, Server
 from circuits import Component, Debugger
+from circuits.web import Logger, Static, Server
 from circuits.net.sockets import TCPClient, Connect
 from circuits.net.protocols.irc import IRC, USER, NICK, JOIN
 
@@ -57,6 +58,12 @@ def parse_options():
     )
 
     parser.add_option(
+        "-l", "--access-log", action="store", default=None,
+        dest="accesslog", metavar="FILE", type=str,
+        help="Store web server access logs in FILE"
+    )
+
+    parser.add_option(
         "-p", "--pidfile",
         action="store", default=PIDFILE, dest="pidfile",
         help="Path to store PID file"
@@ -66,6 +73,12 @@ def parse_options():
         "-v", "--verbose",
         action="store_true", default=False, dest="verbose",
         help="Enable verbose debugging mode"
+    )
+
+    parser.add_options(
+        "--disable-logging", action="store_true", default=False,
+        dest="disable_logging",
+        help="Disable access logging"
     )
 
     opts, args = parser.parse_args()
@@ -104,6 +117,10 @@ class Bot(Component):
 
         # Add Web Server and API
         self += (Server(opts.bind) + Static(docroot=DOCROOT) + WebAPI())
+
+        # Add Web Server Logging
+        if not opts.disable_logging:
+            self += Logger(file=(opts.accesslog or sys.stdout))
 
         # Daemon?
         if self.opts.daemon:
