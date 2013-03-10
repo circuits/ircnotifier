@@ -36,7 +36,7 @@ except IOError:
 
 setup(
     name="ircnotifier",
-    version='0.0.1',
+    version='0.0.2.dev0',
     description="Python IRC Notifier Daemon",
     long_description="%s\n\n%s" % (README, RELEASE),
     author="James Mills",
