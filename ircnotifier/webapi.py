@@ -38,8 +38,9 @@ class WebAPI(JSONController):
 
         return {"success": True}
 
-    def postcommit(self, channel, payload):
-        payload = loads(payload)
+    def postcommit(self, *args, **kwargs):
+        channel = "#{0:s}".format(args[0]) if args else "#circuits"
+        payload = kwargs.get("payload", {})
 
         if not all(k in payload for k in ("repository", "commits",)):
             return {"success": False, "message": "Invalid payload"}
