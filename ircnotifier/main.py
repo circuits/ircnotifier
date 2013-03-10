@@ -8,21 +8,15 @@ For usage type:
 """
 
 
-from os import path
+from os import environ, path
 from socket import gethostname
 from optparse import OptionParser
-from collections import defaultdict
-from re import compile as compile_regex
-from datetime import date, datetime, timedelta
-from os import environ, getcwd, makedirs, path
-from time import asctime, localtime, strftime, time
 
 import circuits
 from circuits.app import Daemon
-from circuits.io import Close, File, Open, Write
+from circuits.web import Static, Server
+from circuits import Component, Debugger
 from circuits.net.sockets import TCPClient, Connect
-from circuits import Component, Event, Debugger, Timer
-from circuits.web import JSONController, Static, Server
 from circuits.net.protocols.irc import IRC, USER, NICK, JOIN
 
 from . webapi import WebAPI
