@@ -30,15 +30,15 @@ def find_packages(where=".", exclude=()):
 path = os.path.abspath(os.path.dirname(__file__))
 try:
     README = open(os.path.join(path, "README.rst")).read()
-    RELEASE = open(os.path.join(path, "RELEASE.rst")).read()
+    CHANGES = open(os.path.join(path, "CHANGES.rst")).read()
 except IOError:
-    README = RELEASE = ""
+    README = CHANGES = ""
 
 setup(
     name="ircnotifier",
     version='0.0.2.dev0',
     description="Python IRC Notifier Daemon",
-    long_description="%s\n\n%s" % (README, RELEASE),
+    long_description="%s\n\n%s" % (README, CHANGES),
     author="James Mills",
     author_email="James Mills, prologic at shortcircuit dot net dot au",
     url="TBA",
