@@ -18,19 +18,16 @@ class WebAPI(JSONController):
 
     channel = "/api"
 
-    def index(self, *args, **kwargs):
-        from pprint import pprint
-        pprint(args)
-        pprint(kwargs)
-        return {"success": True}
+    def index(self):
+        methods = self.handlers()
+        return {"success": True, "methods": methods}
 
     def postcommit(self, *args, **kwargs):
-        from pprint import pprint
-        pprint(args)
-        pprint(kwargs)
-
         channel = "#{0:s}".format(args[0]) if args else "#circuits"
         payload = loads(kwargs.get("payload", "{}"))
+
+        if not all(k in payload for k in ("repository", "commits",)):
+            return {"success": False, "message": "Invalid payload"}
 
         name = payload.get("repository", {}).get("name", "Unknown")
         commits = payload.get("commits", [])
