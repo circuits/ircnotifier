@@ -2,7 +2,7 @@
 # Date:     9th March 2013
 # Author:   James Mills, prologic at shortcircuit dot net dot au
 
-"""ircnotifier - Python IRC Notifier Daemon
+"""ircnotifier - "Python IRC Notifier Daemon with RESTful API using circuits
 
 ircnotifier is a simple daemon written in the `Python Programming Language`_
 utilizing the `circuits`_ framework for the sole purpose of forwarding
