@@ -75,7 +75,7 @@ def parse_options():
         help="Enable verbose debugging mode"
     )
 
-    parser.add_options(
+    parser.add_option(
         "--disable-logging", action="store_true", default=False,
         dest="disable_logging",
         help="Disable access logging"
