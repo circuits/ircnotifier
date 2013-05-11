@@ -164,7 +164,8 @@ class Bot(Component):
         when the active connection has been terminated.
         """
 
-        self.fire(Connect(self.host, self.port))
+        # Try to reconnect every 5s
+        Timer(5, Event.create("Connect", self.host, self.port)).register(self)
 
     def numeric(self, source, target, numeric, args, message):
         """Numeric Event
