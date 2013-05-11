@@ -15,9 +15,9 @@ from optparse import OptionParser
 
 import circuits
 from circuits.app import Daemon
-from circuits import Component, Debugger
 from circuits.web import Logger, Static, Server
-from circuits.net.sockets import TCPClient, Connect
+from circuits import Component, Debugger, Event, Timer
+from circuits.net.sockets import Connect, TCPClient, Write
 from circuits.net.protocols.irc import IRC, USER, NICK, JOIN
 
 from . webapi import WebAPI
@@ -126,6 +126,9 @@ class Bot(Component):
         if self.opts.daemon:
             Daemon(opts.pidfile).register(self)
 
+        # Keep-Alive Timer
+        Timer(60, Event.create("KeepAlive"), persist=True).register(self)
+
     def ready(self, component):
         """Ready Event
 
@@ -134,6 +137,9 @@ class Bot(Component):
         """
 
         self.fire(Connect(self.host, self.port))
+
+    def keep_alive(self):
+        self.fire(Write(b"\x00"))
 
     def connected(self, host, port):
         """Connected Event
