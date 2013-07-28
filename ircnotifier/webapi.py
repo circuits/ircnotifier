@@ -39,7 +39,7 @@ class WebAPI(JSONController):
         return {"success": True}
 
     def postcommit(self, *args, **kwargs):
-        channel = "#{0:s}".format(args[0]) if args else "#circuits"
+        channels = ["#{0:s}".format(x) for x in args[0].split(",")] if args else ["#circuits"]
         payload = loads(kwargs.get("payload", {}))
 
         if not all(k in payload for k in ("repository", "commits",)):
@@ -58,8 +58,9 @@ class WebAPI(JSONController):
             "bot"
         )
 
-        for commit in commits:
-            self.fire(PRIVMSG(channel, "{0:s} by {1:s}: {2:s}".format(
-                commit["node"], commit["author"], commit["message"])), "bot")
+        for channel in channels:
+            for commit in commits:
+                self.fire(PRIVMSG(channel, "{0:s} by {1:s}: {2:s}".format(
+                    commit["node"], commit["author"], commit["message"])), "bot")
 
         return {"success": True}
