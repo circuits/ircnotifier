@@ -48,17 +48,17 @@ class WebAPI(JSONController):
         name = payload.get("repository", {}).get("name", "Unknown")
         commits = payload.get("commits", [])
 
-        self.fire(
-            PRIVMSG(
-                channel,
-                "{0:d} commit(s) pushed to {1:s}".format(
-                    len(commits), name
-                )
-            ),
-            "bot"
-        )
-
         for channel in channels:
+            self.fire(
+                PRIVMSG(
+                    channel,
+                    "{0:d} commit(s) pushed to {1:s}".format(
+                        len(commits), name
+                    )
+                ),
+                "bot"
+            )
+
             for commit in commits:
                 self.fire(PRIVMSG(channel, "{0:s} by {1:s}: {2:s}".format(
                     commit["node"], commit["author"], commit["message"])), "bot")
