@@ -39,7 +39,7 @@ class WebAPI(JSONController):
         return {"success": True}
 
     def postcommit(self, *args, **kwargs):
-        channels = ["#{0:s}".format(x) for x in args[0].split(",")] if args else ["#circuits"]
+        channels = ["#{0:s}".format(x) for x in args[0].split(",")] if args else ["#circuits"]  # noqa
         payload = loads(kwargs.get("payload", {}))
 
         if not all(k in payload for k in ("repository", "commits",)):
