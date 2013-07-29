@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ircnotifier \
+    -d \
+    -b 0.0.0.0:8000 \
+    -l ./access.log \
+    -n ircnotifier \
+    -p ircnotifier.pid \
+    -c "#circuits-dev" \
+    -c "#circuits" \
+    -c "#cmvt" \
+    irc.freenode.net
