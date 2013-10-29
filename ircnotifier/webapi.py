@@ -11,7 +11,7 @@ This module implements the RESTful Web API.
 from json import loads
 
 from circuits.web import JSONController
-from circuits.net.protocols.irc import PRIVMSG
+from circuits.protocols.irc import PRIVMSG
 
 
 class WebAPI(JSONController):

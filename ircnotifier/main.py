@@ -17,8 +17,8 @@ import circuits
 from circuits.app import Daemon
 from circuits.web import Logger, Static, Server
 from circuits import Component, Debugger, Event, Timer
-from circuits.net.sockets import Connect, TCPClient, Write
-from circuits.net.protocols.irc import IRC, USER, NICK, JOIN
+from circuits.protocols.irc import IRC, USER, NICK, JOIN
+from circuits.net.sockets import connect, TCPClient, write
 
 from . webapi import WebAPI
 from . import __name__, __version__
@@ -130,19 +130,19 @@ class Bot(Component):
         Timer(60, Event.create("KeepAlive"), persist=True).register(self)
 
     def ready(self, component):
-        """Ready Event
+        """ready Event
 
         This event is triggered by the underlying ``TCPClient`` Component
         when it is ready to start making a new connection.
         """
 
-        self.fire(Connect(self.host, self.port))
+        self.fire(connect(self.host, self.port))
 
     def keep_alive(self):
-        self.fire(Write(b"\x00"))
+        self.fire(write(b"\x00"))
 
     def connected(self, host, port):
-        """Connected Event
+        """connected Event
 
         This event is triggered by the underlying ``TCPClient`` Component
         when a successfully connection has been made.
@@ -158,17 +158,17 @@ class Bot(Component):
         self.fire(NICK(nick))
 
     def disconnected(self):
-        """Disconnected Event
+        """disconnected Event
 
         This event is triggered by the underlying ``TCPClient`` Component
         when the active connection has been terminated.
         """
 
         # Try to reconnect every 5s
-        Timer(5, Event.create("Connect", self.host, self.port)).register(self)
+        Timer(5, Event.create("connect", self.host, self.port)).register(self)
 
     def numeric(self, source, target, numeric, args, message):
-        """Numeric Event
+        """numeric Event
 
         This event is triggered by the ``IRC`` Protocol Component when we have
         received an IRC Numberic Event from server we are connected to.
@@ -182,14 +182,14 @@ class Bot(Component):
             self.fire(NICK(newnick))
 
     def message(self, source, target, message):
-        """Message Event
+        """message Event
 
         This event is triggered by the ``IRC`` Protocol Component for each
         message we receieve from the server.
         """
 
     def invite(self, source, target, channel):
-        """Invite Event
+        """invite Event
 
         This event is triggered by the ``IRC`` Protocol Component when the
         bot has been invited to a channel.
