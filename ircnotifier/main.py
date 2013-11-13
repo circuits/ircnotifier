@@ -195,6 +195,7 @@ class Bot(Component):
         bot has been invited to a channel.
         """
 
+        self.ircchannels.append(channel)
         self.fire(JOIN(channel))
 
 
