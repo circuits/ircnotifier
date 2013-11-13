@@ -7,7 +7,6 @@ ircnotifier \
     -n ircnotifier \
     -p ircnotifier.pid \
     -c "#circuits-dev" \
-    -c "#eResearch" \
     -c "#circuits" \
     -c "#cmvt" \
     irc.freenode.net
