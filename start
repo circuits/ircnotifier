@@ -9,4 +9,5 @@ ircnotifier \
     -c "#circuits-dev" \
     -c "#circuits" \
     -c "#cmvt" \
+    -c "#AHnet" \
     irc.freenode.net
